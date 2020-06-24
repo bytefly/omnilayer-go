@@ -53,7 +53,6 @@ func (c *Client) sendPost(jReq *jsonRequest) {
 	req.Close = true
 	req.Header.Set(contentType, contentTypeJSON)
 	req.SetBasicAuth(c.config.User, c.config.Pass)
-
 	select {
 	case <-c.shutdown:
 		jReq.responseChan <- &response{err: errClientShutdown()}
@@ -144,7 +143,7 @@ func (c *Client) handleSendPostMessage(details *sendPostDetails) {
 func newHTTPClient() *http.Client {
 	return &http.Client{
 		Transport: &http.Transport{
-			ResponseHeaderTimeout: 5 * time.Second,
+			ResponseHeaderTimeout: 60 * time.Second,
 			ExpectContinueTimeout: 4 * time.Second,
 			IdleConnTimeout:       5 * 60 * time.Second,
 		},

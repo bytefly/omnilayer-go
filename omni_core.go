@@ -2,8 +2,7 @@ package omnilayer
 
 import (
 	"encoding/json"
-
-	"github.com/ibclabs/omnilayer-go/omnijson"
+	"github.com/bytefly/omnilayer-go/omnijson"
 )
 
 type futureOmniCreatePayloadSimpleSend chan *response
@@ -114,6 +113,19 @@ func (f futureOmniGetBalance) Receive() (omnijson.OmniGetBalanceResult, error) {
 		return result, err
 	}
 
+	err = json.Unmarshal(data, &result)
+	return result, err
+}
+
+type futureOmniListPendingTransactions chan *response
+
+func (f futureOmniListPendingTransactions) Receive() (omnijson.OmniListPendingTransactionsResult, error) {
+	data, err := receive(f)
+	if err != nil {
+		return nil, err
+	}
+
+	result := make(omnijson.OmniListPendingTransactionsResult, 0)
 	err = json.Unmarshal(data, &result)
 	return result, err
 }

@@ -1,3 +1,3 @@
-module github.com/ibclabs/omnilayer-go
+module github.com/bytefly/omnilayer-go
 
 go 1.12
